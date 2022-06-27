@@ -4,7 +4,12 @@ const enviar = document.getElementById("enviar")
 const actu = document.getElementById("actu")
 const botonEliminar=document.getElementById("botonEliminar")
 
-console.log(botonEliminar)
+botonEliminar.addEventListener("click", ()=>{
+    const eliminar=document.getElementById("eliminar")
+    const url = `https://62b8864c03c36cb9b7c878ad.mockapi.io/api/ejemplo/user/${eliminar.value}`
+    axios.delete(url).then(res=>console.log(res)).catch(err=>console.log(err))
+})
+
 
 actu.addEventListener("click", () => {
     const nombrep = document.getElementById("nombrep").value
@@ -32,18 +37,14 @@ button.addEventListener('click', () => {
     }).then(res => {
 
         const list = document.getElementById("list")
-        const fragment = document.createDocumentFragment(list)
-
-
-
+list.innerHTML=''
         for (const userInfo of res.data) {
-            console.log(userInfo)
 
             const listItem = document.createElement("LI")
             listItem.textContent = `${userInfo.name} , ${userInfo.age}, ${userInfo.job}, ${userInfo.id}`
-            console.log(listItem)
-            fragment.appendChild(listItem)
+            list.appendChild(listItem)
         }
+        
     })
         .catch(error => {
             console.log(error)
